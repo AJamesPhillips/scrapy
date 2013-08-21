@@ -56,7 +56,8 @@ class RetryMiddleware(object):
         return response
 
     def process_exception(self, request, exception, spider):
-        if isinstance(exception, self.EXCEPTIONS_TO_RETRY) \
+        ex = exception[0][0].value
+        if isinstance(ex, self.EXCEPTIONS_TO_RETRY) \
                 and 'dont_retry' not in request.meta:
             return self._retry(request, exception, spider)
 
